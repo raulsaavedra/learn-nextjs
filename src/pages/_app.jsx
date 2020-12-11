@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+import Link from 'next/link';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -17,6 +18,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Nav = styled.nav`
+  background: black;
+  display: flex;
+`;
+const StyledLink = styled.a`
+  color: white;
+  &:not(:last-child) {
+    margin-right: 2rem;
+  }
+  background: black;
+`;
 function MyApp({ Component, pageProps }) {
   return (
     <div>
@@ -28,7 +40,17 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Helmet>
+
       <GlobalStyle />
+      <Nav>
+        <Link href="/" passHref>
+          <StyledLink>Home</StyledLink>
+        </Link>
+        <Link href="/notes" passHref>
+          <StyledLink>Notes</StyledLink>
+        </Link>
+        <StyledLink href={process.env.HELP_APP_URL}>Help</StyledLink>
+      </Nav>
       <Component {...pageProps} />
     </div>
   );

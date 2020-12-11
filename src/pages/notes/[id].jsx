@@ -1,9 +1,21 @@
-import { useRouter } from 'next/router';
-
-const Page = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  return <h1>Note {id}</h1>;
-};
+const Page = ({ note }) => <h1>Note {note.id}</h1>;
 
 export default Page;
+
+export async function getServerSideProps({ params, req, res }) {
+  const response = await fetch(`${process.env.API_URL}/api/note/${params.id}`);
+  if (!response.ok) {
+    res.writeHead(302, {
+      location: '/notes',
+    });
+    res.end();
+    return {
+      props: {},
+    };
+  }
+  const { data } = await response.json();
+  console.log('note', data);
+  return {
+    props: { note: data },
+  };
+}

@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import notes from '../../data/data';
 
-const Page = () => (
+const Page = ({ notes }) => (
   <div>
     <h1>Note Index Path</h1>
     {notes.map((note) => (
@@ -13,5 +12,12 @@ const Page = () => (
     ))}
   </div>
 );
-
 export default Page;
+
+export async function getServerSideProps() {
+  const response = await fetch(`${process.env.API_URL}/api/note`);
+  const { data } = await response.json();
+  return {
+    props: { notes: data },
+  };
+}
