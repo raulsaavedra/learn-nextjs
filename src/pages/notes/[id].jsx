@@ -13,6 +13,7 @@ export async function getServerSideProps({ params, req, res }) {
       props: {},
     };
   }
+
   const { data } = await response.json();
   console.log('note', data);
   return {
