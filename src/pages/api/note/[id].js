@@ -1,9 +1,9 @@
-import nextConnect from 'next-connect';
+import nc from 'next-connect';
 import notes from '../../../data/data';
 
 const getNote = (id) => notes.find((n) => n.id === parseInt(id));
 
-const handler = nextConnect()
+const handler = nc()
   .get((req, res) => {
     const note = getNote(req.query.id);
 
